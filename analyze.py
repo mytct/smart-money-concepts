@@ -15,6 +15,9 @@ def print_c(text, color="red"):
 def generate_sample_data():
     symbol = "FTM"
     print_c('Step 1: File loaded successfully.')
+
+    pd.set_option('display.max_rows', 20)  # This will display all rows
+    pd.set_option('display.max_columns', None)  # This will display all columns
     df = pd.read_csv(f"data/{symbol}.csv", parse_dates=["datetime"])
     # Convert column names to lowercase
     df.columns = df.columns.str.lower()
@@ -39,6 +42,7 @@ def generate_sample_data():
 def main():
     # Generate and print the sample OHLCV data
     ohlcv_data = generate_sample_data()
+
     print_c("Sample OHLCV DataFrame:", 'green')
     print_c(ohlcv_data.head(), 'blue')
     print("============================")
@@ -49,6 +53,7 @@ def main():
         # print("\n FVG Result:", fvgResult)
         # print("\nFVG Columns:", fvgResult.columns)
         fvg_filtered_result = fvgResult.dropna(subset=['FVG'])
+        fvg_filtered_result = fvg_filtered_result[fvg_filtered_result['FVG'] > 0]
 
         if not fvg_filtered_result.empty:
             print("\nFiltered FVG Result (non-NaN values):")
@@ -67,6 +72,7 @@ def main():
         # print("\n SHL Result:", shlResult)
         # print("\nSHL Columns:", shlResult.columns)
         shl_filtered_result = shlResult.dropna(subset=['HighLow'])
+        shl_filtered_result = shl_filtered_result[shl_filtered_result['HighLow'] > 0]
 
         if not shl_filtered_result.empty:
             print("\nFiltered SHL Result (non-NaN values):")
@@ -85,6 +91,7 @@ def main():
         # print("\n BOS_CHOCH Result:", bosChochResult)
         # print("\nBOS_CHOCH Columns:", bosChochResult.columns)
         bos_choch_filtered_result = bosChochResult.dropna(subset=['BOS'])
+        bos_choch_filtered_result = bos_choch_filtered_result[bos_choch_filtered_result['BOS'] > 0]
 
         if not bos_choch_filtered_result.empty:
             print("\nFiltered BOS_CHOCH Result (non-NaN values):")
@@ -121,6 +128,7 @@ def main():
         # print("\n Liquidity Result:", lqResult)
         # print("\nLiquidity Columns:", lqResult.columns)
         lq_filtered_result = lqResult.dropna(subset=['Liquidity'])
+        lq_filtered_result = lq_filtered_result[lq_filtered_result['Liquidity'] > 0]
 
         if not lq_filtered_result.empty:
             print("\nFiltered Liquidity Result (non-NaN values):")
@@ -178,6 +186,7 @@ def main():
         # print("\n Retracements:", reResult)
         # print("\nRetracements:", reResult.columns)
         retracement_filtered_result = reResult.dropna(subset=['Direction'])
+        retracement_filtered_result = retracement_filtered_result[retracement_filtered_result['Direction'] > 0]
 
         if not retracement_filtered_result.empty:
             print("\nFiltered Retracements (non-NaN values):")
